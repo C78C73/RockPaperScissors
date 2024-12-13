@@ -9,51 +9,61 @@ def main():
 
     while True:
         
-        #user picks the choice
-        userChoice = str(input("\nChoose: Rock, Paper, or Scissors: ")).lower()
+        try:
+            #user picks the choice
+            userChoice = str(input("\n-----------------------------------------\nChoose: Rock, Paper, or Scissors: ")).lower()
+        except Exception as Error:
+            print(f"Error: {Error}")
+            continue
+        
+        print("-----------------------------------------")
 
         #CPU randomly gets a choice
         cpuChoice = random.choice(choices)
 
         #rock
         if (userChoice == "rock" and cpuChoice == "paper"):
-            print(f"\nUser picked: {userChoice} \nCPU picked: {cpuChoice}")
-            userLives -= 1
-            print(f"\nUser lost a life\n\nCPU lives: {cpuLives} left\nUser lives: {userLives} left")
+            userLives, cpuLives = UserLost(userChoice, cpuChoice, userLives, cpuLives)  
         elif (userChoice == "rock" and cpuChoice == "scissors"):
-            print(f"\nUser picked: {userChoice} \nCPU picked: {cpuChoice}")
-            cpuLives -= 1
-            print(f"\nCPU lost a life\n\nCPU lives: {cpuLives} left\nUser lives: {userLives} left")
+            userLives, cpuLives = CPULost(userChoice, cpuChoice, userLives, cpuLives)
 
         #paper
         elif (userChoice == "paper" and cpuChoice == "scissors"):
-            print(f"\nUser picked: {userChoice} \nCPU picked: {cpuChoice}")
-            userLives -= 1
-            print(f"\nUser lost a life\n\nCPU lives: {cpuLives} left\nUser lives: {userLives} left")
+            userLives, cpuLives = UserLost(userChoice, cpuChoice, userLives, cpuLives)  
         elif (userChoice == "paper" and cpuChoice == "rock"):
-            print(f"\nUser picked: {userChoice} \nCPU picked: {cpuChoice}")
-            cpuLives -= 1
-            print(f"\nCPU lost a life\n\nCPU lives: {cpuLives} left\nUser lives: {userLives} left")
+            userLives, cpuLives = CPULost(userChoice, cpuChoice, userLives, cpuLives)
             
         #scissors
         elif (userChoice == "scissors" and cpuChoice == "rock"):
-            print(f"\nUser picked: {userChoice} \nCPU picked: {cpuChoice}")
-            userLives -= 1
-            print(f"\nUser lost a life\n\nCPU lives: {cpuLives} left\nUser lives: {userLives} left")          
+            userLives, cpuLives = UserLost(userChoice, cpuChoice, userLives, cpuLives)         
         elif (userChoice == "scissors" and cpuChoice == "paper"):
-            print(f"\nUser picked: {userChoice} \nCPU picked: {cpuChoice}")
-            cpuLives -= 1
-            print(f"\nCPU lost a life\n\nCPU lives: {cpuLives} left\nUser lives: {userLives} left")
+            userLives, cpuLives = CPULost(userChoice, cpuChoice, userLives, cpuLives)
         else:
-            print(f"\nTIE\nUser picked: {userChoice} \nCPU picked: {cpuChoice}")
-            print(f"\nCPU lives: {cpuLives} left\nUser lives: {userLives} left")
+            userLives, cpuLives = Tie(userChoice, cpuChoice, userLives, cpuLives)
             
-
+        # end game
         if (cpuLives == 0):
             print("User WINS\n")
             break 
         elif (userLives == 0):
             print("\nCPU WINS\n")
             break
+
+def UserLost(userChoice, cpuChoice, userLives, cpuLives):
+    print(f"\nUser picked: {userChoice} \nCPU picked: {cpuChoice}")
+    userLives -= 1
+    print(f"\nUser lost a life\n\nCPU lives: {cpuLives} left\nUser lives: {userLives} left")
+    return userLives, cpuLives
+
+def CPULost(userChoice, cpuChoice, userLives, cpuLives):
+    print(f"\nUser picked: {userChoice} \nCPU picked: {cpuChoice}")
+    cpuLives -= 1
+    print(f"\nCPU lost a life\n\nCPU lives: {cpuLives} left\nUser lives: {userLives} left")
+    return userLives, cpuLives
+
+def Tie(userChoice, cpuChoice, userLives, cpuLives):
+    print(f"\nTIE\nUser picked: {userChoice} \nCPU picked: {cpuChoice}")
+    print(f"\nCPU lives: {cpuLives} left\nUser lives: {userLives} left")
+    return userLives, cpuLives
 
 main()
