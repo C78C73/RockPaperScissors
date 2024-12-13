@@ -12,6 +12,8 @@ def main():
         try:
             #user picks the choice
             userChoice = str(input("\n-----------------------------------------\nChoose: Rock, Paper, or Scissors: ")).lower()
+            if userChoice not in choices:
+                raise Exception("Invalid input")
         except Exception as Error:
             print(f"Error: {Error}")
             continue
